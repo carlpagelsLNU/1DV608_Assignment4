@@ -20,7 +20,17 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$message = '';
+		if(isset($_POST['LoginView::Login'])) { // Check if login button has been pressed
+				$name = $_POST['LoginView::UserName']; // Set name to whatever has been filled in the name box
+			if(strlen($name) < 1) // Check if the name is longer than 0(not empty)
+				$message = 'Please enter a username'; // If it's empty
+			else {
+				$message = ''; // If it's not empty
+			}
+		}
+		else {
+			$message = ''; // Standard message if button hasnt been pressed
+		}
 		
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
