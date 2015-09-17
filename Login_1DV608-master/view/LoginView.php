@@ -1,5 +1,4 @@
 <?php
-
 class LoginView {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
@@ -20,17 +19,14 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
+
+		$login = new Login();
+
 		if(isset($_POST['LoginView::Login'])) { // Check if login button has been pressed
 				$user = $_POST['LoginView::UserName']; // Set name to whatever has been filled in the name box
 				$password = $_POST['LoginView::Password'];
-			if(strlen($user) < 1) // Check if the name is longer than 0(not empty)
-				$message = 'Username is missing'; // If it's empty
-			else if(strlen($password) < 1) {
-				$message = 'Password is missing'; // If it's not empty
-			}
-			else {
-				$message = '';
-			}
+
+				$message = $login->validateMessage($user, $password); // Method in model package to validate if anything has been written in boxes
 		}
 		else {
 			$message = ''; // Standard message if button hasnt been pressed
@@ -86,6 +82,25 @@ class LoginView {
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
 		//RETURN REQUEST VARIABLE: USERNAME
+		if(isset($_POST['LoginView::Login'])) {
+			$user = $_POST['LoginView::UserName'];
+		}
+		return $user;
+	}
+
+	private function getRequqestPassword()  {
+		//RETURN REQUEST VARIABLE: PASSWORD
+		if(isset($_POST['LoginView::Login'])) {
+			$password = $_POST['LoginView::UserName'];
+		}
+		return $password;
+	}
+
+	private function getRequestMessage() {
+		//RETURN REQUEST VARIABLE: MESSAGE
+		if(isset($_POST['LoginView::Login'])) {
+
+		}
 	}
 	
 }
