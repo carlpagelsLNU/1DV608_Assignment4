@@ -25,15 +25,20 @@ class LoginView {
 		if(isset($_POST['LoginView::Login'])) { // Check if login button has been pressed
 				$user = $_POST['LoginView::UserName']; // Set name to whatever has been filled in the name box
 				$password = $_POST['LoginView::Password'];
-
-				$message = $login->validateMessage($user, $password); // Method in model package to validate if anything has been written in boxes
+				$login->validateMessage($user, $password);
+				$message = $login->getMessage(); // Method in model package to validate if anything has been written in boxes
 		}
 		else {
-			$message = ''; // Standard message if button hasnt been pressed
-			$user = '';
+			$message = $login->getMessage(); // Standard message if button hasnt been pressed
+			$user = $login->getUser();
 		}
-		
-		$response = $this->generateLoginFormHTML($message, $user); // Send message 
+		if($login->signedIn()) {
+			$response = $this->generateLogoutButtonHTML($message);
+		}
+		else {
+			$response = $this->generateLoginFormHTML($message, $user);
+		}
+		// $response = $this->generateLoginFormHTML($message, $user); // Send message 
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
 	}
@@ -81,26 +86,6 @@ class LoginView {
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
-		//RETURN REQUEST VARIABLE: USERNAME
-		if(isset($_POST['LoginView::Login'])) {
-			$user = $_POST['LoginView::UserName'];
-		}
-		return $user;
-	}
-
-	private function getRequqestPassword()  {
-		//RETURN REQUEST VARIABLE: PASSWORD
-		if(isset($_POST['LoginView::Login'])) {
-			$password = $_POST['LoginView::UserName'];
-		}
-		return $password;
-	}
-
-	private function getRequestMessage() {
-		//RETURN REQUEST VARIABLE: MESSAGE
-		if(isset($_POST['LoginView::Login'])) {
-
-		}
 	}
 	
 }
