@@ -11,6 +11,6 @@ class DateTimeView {
 		$year = date("Y, "); // The year
 		$time = date("H:i:s "); // The time printed in 24h format
 
-		return '<p>' . $day . 'the ' . $dayDate . 'of ' . $month . $year . 'The time is: ' . $time . '</p>';
+		return '<p>' . $day . 'the ' . $dayDate . 'of ' . $month . $year . 'The time is ' . $time . '</p>';
 	}
 }

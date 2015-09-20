@@ -19,7 +19,6 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-
 		$login = new Login();
 
 		if(isset($_POST['LoginView::Login'])) { // Check if login button has been pressed
@@ -28,19 +27,24 @@ class LoginView {
 				$login->validateMessage($user, $password);
 				$message = $login->getMessage(); // Method in model package to validate if anything has been written in boxes
 		}
-		else {
-			$message = $login->getMessage(); // Standard message if button hasnt been pressed
-			$user = $login->getUser();
-		}
+			else {
+				$message = $login->getMessage(); // Standard message if button hasnt been pressed
+				$user = $login->getUser();
+			}
 		if($login->signedIn()) {
 			$response = $this->generateLogoutButtonHTML($message);
 		}
-		else {
+			else {
+				$response = $this->generateLoginFormHTML($message, $user);
+			}
+
+		if(isset($_POST['LoginView::Logout'])) {
+			$login->logout();
+			$message = $login->getMessage();
 			$response = $this->generateLoginFormHTML($message, $user);
 		}
-		// $response = $this->generateLoginFormHTML($message, $user); // Send message 
-		//$response .= $this->generateLogoutButtonHTML($message);
-		return $response;
+
+	return $response;
 	}
 
 	/**

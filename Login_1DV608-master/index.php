@@ -14,7 +14,7 @@ ini_set('display_errors', 'On');
 $v = new LoginView();
 $dtv = new DateTimeView();
 $lv = new LayoutView();
+$l = new Login();
 
-
-$lv->render(false, $v, $dtv);
+$lv->render($l->signedIn(), $v, $dtv);
 
