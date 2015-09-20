@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 //INCLUDE THE FILES NEEDED...
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
@@ -15,6 +16,10 @@ $v = new LoginView();
 $dtv = new DateTimeView();
 $lv = new LayoutView();
 $l = new Login();
+
+
+		if(!isset($_SESSION['signedIn']))
+			$_SESSION['signedIn'] = false;
 
 $lv->render($l->signedIn(), $v, $dtv);
 

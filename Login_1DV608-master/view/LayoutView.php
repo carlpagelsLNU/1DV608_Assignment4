@@ -1,9 +1,9 @@
 <?php
 
-
 class LayoutView {
 
   public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
+    $ret = $v->response(); // set the return message for logged in status first
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -15,7 +15,7 @@ class LayoutView {
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
           
           <div class="container">
-              ' . $v->response() . '
+              ' . $ret. '
               
               ' . $dtv->show() . '
           </div>
@@ -25,7 +25,7 @@ class LayoutView {
   }
   
   private function renderIsLoggedIn($isLoggedIn) {
-    if ($isLoggedIn) {
+    if ($_SESSION['signedIn']) {
       return '<h2>Logged in</h2>';
     }
     else {
