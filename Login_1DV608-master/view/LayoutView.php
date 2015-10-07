@@ -1,6 +1,7 @@
 <?php
-
 class LayoutView {
+
+  private $register = 'register';
 
   public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
     $ret = $v->response(); // set the return message for logged in status first
@@ -12,7 +13,7 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          ' . $this->renderIsLoggedIn($isLoggedIn) . '
+          ' . $this->renderRegisterUser() . $this->renderIsLoggedIn($isLoggedIn) . '
           
           <div class="container">
               ' . $ret. '
@@ -32,4 +33,18 @@ class LayoutView {
       return '<h2>Not logged in</h2>';
     }
   }
+
+  private function renderRegisterUser() {
+    if ($_SESSION['signedIn']) {
+      return '';
+    }
+    else {
+      return "<a href='?" . $this->register . "'>Register a new user</a>";
+    }
+  }
+
+  public function registerClicked() {
+    return isset($_POST[$this->register]);
+  }
+
 }

@@ -1,14 +1,11 @@
 <?php
-class Login {
+class LoginModel {
 	private $message = '';
 	private $user = '';
 	private $password = '';
 	public function __construct () {
 	}
-
 	public function validateMessage($user, $password) {
-
-
 		if(strlen($user) < 1) { // If username is empty
 			$this->setMessage('Username is missing');
 		}
@@ -28,13 +25,11 @@ class Login {
 			$this->setUser($user);
 		}
 	}
-
 	public function logout() {
 		$_SESSION['signedIn'] = false;
 		session_destroy();
 		$this->setMessage('Bye bye!');
 	}
-
 	public function signedIn() {
 		if(isset($_SESSION['signedIn']))
 			if($_SESSION['signedIn'])

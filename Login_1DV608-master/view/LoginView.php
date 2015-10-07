@@ -8,9 +8,7 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
-
 	
-
 	/**
 	 * Create HTTP response
 	 *
@@ -20,7 +18,6 @@ class LoginView {
 	 */
 	public function response() {
 		$login = new Login();
-
 		if(isset($_POST['LoginView::Login'])) { // Check if login button has been pressed
 				$user = $_POST['LoginView::UserName']; // Set name to whatever has been filled in the name box
 				$password = $_POST['LoginView::Password'];
@@ -44,10 +41,8 @@ class LoginView {
 				$response = $this->generateLoginFormHTML($message, $user);
 		}
 		}
-
 	return $response;
 	}
-
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -76,10 +71,8 @@ class LoginView {
 					
 					<label for="' . self::$name . '">Username :</label>
 					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $user . '" />
-
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
-
 					<label for="' . self::$keep . '">Keep me logged in  :</label>
 					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
 					
@@ -87,6 +80,10 @@ class LoginView {
 				</fieldset>
 			</form>
 		';
+	}
+
+	private function generateRegisterButton() {
+
 	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
