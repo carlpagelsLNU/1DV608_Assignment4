@@ -24,7 +24,6 @@ $user = new User();
 $userDAL = new UserDAL();
 
 // Initiate Controllers
-//$mainCtrl = new Controller();
 $loginCtrl = new LoginController($loginModel);
 $registerCtrl = new RegisterController();
 
