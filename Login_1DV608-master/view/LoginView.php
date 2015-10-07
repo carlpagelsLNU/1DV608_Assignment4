@@ -17,7 +17,7 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$login = new Login();
+		$login = new LoginModel();
 		if(isset($_POST['LoginView::Login'])) { // Check if login button has been pressed
 				$user = $_POST['LoginView::UserName']; // Set name to whatever has been filled in the name box
 				$password = $_POST['LoginView::Password'];
