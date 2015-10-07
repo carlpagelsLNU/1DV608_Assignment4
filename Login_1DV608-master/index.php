@@ -9,7 +9,6 @@ require_once('model/LoginModel.php');
 require_once('model/RegisterModel.php');
 require_once('model/User.php');
 require_once('model/UserDAL.php');
-//require_once('controller/Controller.php');
 require_once('controller/LoginController.php');
 require_once('controller/RegisterController.php');
 
@@ -23,14 +22,14 @@ $registerModel = new RegisterModel();
 $user = new User();
 $userDAL = new UserDAL();
 
-// Initiate Controllers
-$loginCtrl = new LoginController($loginModel);
-$registerCtrl = new RegisterController();
-
 // Initiate views
 $dt = new DateTimeView();
 $lv = new LayoutView();
 $l = new LoginView();
+
+// Initiate Controllers
+$loginCtrl = new LoginController($loginModel, $l);
+$registerCtrl = new RegisterController();
 
 $lv->render($loginModel->signedIn(), $l, $dt);
 

@@ -8,7 +8,6 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
-	
 	/**
 	 * Create HTTP response
 	 *
@@ -17,29 +16,29 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$login = new LoginModel();
+		$loginModel = new LoginModel();
+		$loginView = new LoginView();
+		$loginController = new LoginController($loginModel, $loginView);
+
 		if(isset($_POST['LoginView::Login'])) { // Check if login button has been pressed
 				$user = $_POST['LoginView::UserName']; // Set name to whatever has been filled in the name box
-				$password = $_POST['LoginView::Password'];
-				$login->validateMessage($user, $password);
-				$message = $login->getMessage(); // Method in model package to validate if anything has been written in boxes
+				$password = $_POST['LoginView::Password']; // Set password to whatever has been filled in the password box
+				$loginController->validateMessage($user, $password);	
 		}
-			else {
-				$message = $login->getMessage(); // Standard message if button hasnt been pressed
-				$user = $login->getUser();
-			}
-		if($login->signedIn()) {
-			$response = $this->generateLogoutButtonHTML($message);
+		else {
+			$user = $loginController->getUser();
 		}
-			else {
-				$response = $this->generateLoginFormHTML($message, $user);
-			}
-		if($login->signedIn()) {
+		if($loginController->isSignedIn()) {
+			$response = $this->generateLogoutButtonHTML($loginModel->getMessage());
+		}
+		else {
+			$response = $this->generateLoginFormHTML($loginModel->getMessage(), $user);
+		}
+		if($loginController->isSignedIn()) {
 			if(isset($_POST['LoginView::Logout'])) {
-				$login->logout();
-				$message = $login->getMessage();
-				$response = $this->generateLoginFormHTML($message, $user);
-		}
+				$loginController->logout();
+				$response = $this->generateLoginFormHTML($loginModel->getMessage(), $user);
+			}
 		}
 	return $response;
 	}
@@ -82,12 +81,15 @@ class LoginView {
 		';
 	}
 
-	private function generateRegisterButton() {
+	private function generateRegisterForm() {
 
 	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
+	}
+	public function setSessionTrue() {
+		$_SESSION['signedIn'] = true;
 	}
 	
 }

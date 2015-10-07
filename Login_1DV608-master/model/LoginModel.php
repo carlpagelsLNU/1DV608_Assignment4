@@ -5,26 +5,7 @@ class LoginModel {
 	private $password = '';
 	public function __construct () {
 	}
-	public function validateMessage($user, $password) {
-		if(strlen($user) < 1) { // If username is empty
-			$this->setMessage('Username is missing');
-		}
-		else if (strlen($password) < 1) { // If password is empty
-			$this->setMessage('Password is missing');
-		}
-		else if($user == 'Admin' && $password == 'Password') { // If username and password are correct
-				$this->setMessage("Welcome");
-				$_SESSION['signedIn'] = true;
-			}
-		else if($user != 'Admin' || $password != 'Password') { // If either username or password is incorrect
-			$this->setMessage('Wrong name or password');
-		}
-		else {
-			$this->setMessage('');
-			$this->setPassword($password);
-			$this->setUser($user);
-		}
-	}
+	
 	public function logout() {
 		$_SESSION['signedIn'] = false;
 		session_destroy();
@@ -36,7 +17,7 @@ class LoginModel {
 				return true;
 			return false;
 	}
-	private function setMessage($message) {
+	public function setMessage($message) {
 		$this->message = $message;
 	}
 	public function getMessage() {
