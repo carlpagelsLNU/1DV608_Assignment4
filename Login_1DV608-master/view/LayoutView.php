@@ -2,9 +2,10 @@
 class LayoutView {
 
   private $register = 'register';
-
   public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
     $ret = $v->response(); // set the return message for logged in status first
+    $lm = new LoginModel();
+    $isLoggedIn = $lm->signedIn();
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -13,7 +14,7 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          ' . $this->renderRegisterUser() . $this->renderIsLoggedIn($isLoggedIn) . '
+          ' . $this->renderRegisterUser($isLoggedIn) . $this->renderIsLoggedIn($isLoggedIn) . '
           
           <div class="container">
               ' . $ret. '
@@ -26,7 +27,7 @@ class LayoutView {
   }
   
   private function renderIsLoggedIn($isLoggedIn) {
-    if ($_SESSION['signedIn']) {
+    if ($isLoggedIn) {
       return '<h2>Logged in</h2>';
     }
     else {
@@ -34,8 +35,8 @@ class LayoutView {
     }
   }
 
-  private function renderRegisterUser() {
-    if ($_SESSION['signedIn']) {
+  private function renderRegisterUser($isLoggedIn) {
+    if ($isLoggedIn) {
       return '';
     }
     else {

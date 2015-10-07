@@ -34,7 +34,7 @@ class LoginView {
 			else {
 				$response = $this->generateLoginFormHTML($message, $user);
 			}
-		if($_SESSION['signedIn']) {
+		if($login->signedIn()) {
 			if(isset($_POST['LoginView::Logout'])) {
 				$login->logout();
 				$message = $login->getMessage();

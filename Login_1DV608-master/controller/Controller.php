@@ -1,9 +1,9 @@
 <?php
-//INCLUDE THE FILES NEEDED...
+/*//INCLUDE THE FILES NEEDED...
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
-require_once('model/Login.php');
+require_once('model/LoginModel.php');
 class Controller {
 private $v;
 private $dtv;
@@ -14,7 +14,7 @@ private $l;
 		$this->v = new LoginView();
 		$this->dtv = new DateTimeView();
 		$this->lv = new LayoutView();
-		$this->l = new Login();
+		$this->l = new LoginModel();
 	}
 	public function start() {
 		if(!isset($_SESSION['signedIn']))

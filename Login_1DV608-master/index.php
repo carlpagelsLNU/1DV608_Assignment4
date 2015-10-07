@@ -9,9 +9,9 @@ require_once('model/LoginModel.php');
 require_once('model/RegisterModel.php');
 require_once('model/User.php');
 require_once('model/UserDAL.php');
-require_once('controller/Controller.php');
+//require_once('controller/Controller.php');
 require_once('controller/LoginController.php');
-require_once('controller/RegisterController');
+require_once('controller/RegisterController.php');
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 error_reporting(E_ALL);
@@ -24,13 +24,15 @@ $user = new User();
 $userDAL = new UserDAL();
 
 // Initiate Controllers
-$mainCtrl = new Controller();
-$loginCtrl = new LoginController();
+//$mainCtrl = new Controller();
+$loginCtrl = new LoginController($loginModel);
 $registerCtrl = new RegisterController();
 
 // Initiate views
 $dt = new DateTimeView();
 $lv = new LayoutView();
 $l = new LoginView();
+
+$lv->render($loginModel->signedIn(), $l, $dt);
 
 
