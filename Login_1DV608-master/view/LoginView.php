@@ -79,12 +79,7 @@ class LoginView {
 				</fieldset>
 			</form>
 		';
-	}
-
-	private function generateRegisterForm() {
-
-	}
-	
+	}	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
 	}

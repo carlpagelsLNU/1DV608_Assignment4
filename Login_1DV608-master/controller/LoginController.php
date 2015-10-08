@@ -58,6 +58,7 @@ class LoginController {
 	* Logout using method in LoginModel
 	*/
 	public function logout() {
+		$this->loginModel->setMessage('Bye bye!');
 		$this->loginModel->logout();
 	}
 

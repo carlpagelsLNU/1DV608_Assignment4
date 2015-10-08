@@ -8,8 +8,8 @@ class LoginModel {
 	
 	public function logout() {
 		$_SESSION['signedIn'] = false;
-		session_destroy();
 		$this->setMessage('Bye bye!');
+		session_destroy();
 	}
 	public function signedIn() {
 		if(isset($_SESSION['signedIn']))

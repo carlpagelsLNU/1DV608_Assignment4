@@ -1,12 +1,15 @@
 <?php
 class LayoutView {
 
-  private $register = 'register';
-  public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
+  private static $registerLink = "register";
+
+  public function render($isLoggedIn, LoginView $v, DateTimeView $dtv, RegisterView $rv) {
     $ret = $v->response(); // set the return message for logged in status first
     $lm = new LoginModel();
     $isLoggedIn = $lm->signedIn();
-    echo '<!DOCTYPE html>
+    ?>
+    
+    <!DOCTYPE html>
       <html>
         <head>
           <meta charset="utf-8">
@@ -14,38 +17,33 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          ' . $this->renderRegisterUser($isLoggedIn) . $this->renderIsLoggedIn($isLoggedIn) . '
-          
-          <div class="container">
-              ' . $ret. '
-              
-              ' . $dtv->show() . '
+          <?php 
+          if($this->isRegisterClicked())
+            echo $rv->getLoginLink();
+          else if(!$isLoggedIn)
+            echo $rv->getRegLink();
+          if($isLoggedIn)
+            echo "<h2>Logged in</h2>";
+          else 
+            echo "<h2>Not logged in</h2>"
+          ?>
+         <div class="container">
+         <?php 
+              if($this->isRegisterClicked())
+                echo $rv->response();
+              else 
+                echo $v->response();
+
+              echo $dtv->show();
+         ?>
           </div>
          </body>
       </html>
-    ';
-  }
-  
-  private function renderIsLoggedIn($isLoggedIn) {
-    if ($isLoggedIn) {
-      return '<h2>Logged in</h2>';
-    }
-    else {
-      return '<h2>Not logged in</h2>';
-    }
+      <?php
   }
 
-  private function renderRegisterUser($isLoggedIn) {
-    if ($isLoggedIn) {
-      return '';
-    }
-    else {
-      return "<a href='?" . $this->register . "'>Register a new user</a>";
-    }
-  }
-
-  public function registerClicked() {
-    return isset($_POST[$this->register]);
+  public function isRegisterClicked() {
+    return isset($_GET[self::$registerLink]);
   }
 
 }
