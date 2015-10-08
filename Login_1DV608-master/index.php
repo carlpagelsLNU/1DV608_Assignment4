@@ -31,7 +31,7 @@ $rv = new RegisterView();
 
 // Initiate Controllers
 $loginCtrl = new LoginController($loginModel, $l);
-$registerCtrl = new RegisterController();
+$registerCtrl = new RegisterController($registerModel, $rv);
 
 $lv->render($loginModel->signedIn(), $l, $dt, $rv);
 

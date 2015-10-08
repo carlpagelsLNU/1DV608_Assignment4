@@ -7,6 +7,8 @@ class LayoutView {
     $ret = $v->response(); // set the return message for logged in status first
     $lm = new LoginModel();
     $isLoggedIn = $lm->signedIn();
+    $returnMessageRegister = $rv->response();
+    $returnMessageLogin = $v->response();
     ?>
     
     <!DOCTYPE html>
@@ -30,9 +32,9 @@ class LayoutView {
          <div class="container">
          <?php 
               if($this->isRegisterClicked())
-                echo $rv->response();
+                echo $returnMessageRegister;
               else 
-                echo $v->response();
+                echo $returnMessageLogin;
 
               echo $dtv->show();
          ?>

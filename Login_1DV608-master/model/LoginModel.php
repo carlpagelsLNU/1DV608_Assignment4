@@ -12,6 +12,11 @@ class LoginModel {
 				return true;
 			return false;
 	}
+	public function logout() {
+		$this->setMessage('Bye bye!');
+		$_SESSION['signedIn'] = false;
+		session_destroy();
+	}
 	public function setMessage($message) {
 		$this->message = $message;
 	}

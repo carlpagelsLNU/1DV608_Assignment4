@@ -11,12 +11,29 @@ class RegisterView {
 	private $message = '';
 
 	  public function response() {
-        return '
+        $registerModel = new registerModel();
+        $registerController = new registerController($registerModel, $this);
+        if(isset($_POST['RegisterView::Register'])) {
+          
+          $user = $_POST['RegisterView::UserName'];
+          $password = $_POST['RegisterView::Password'];
+          $passwordRepeat = $_POST['RegisterView::Register'];
+          $registerController->validateMessage($user, $password, $passwordRepeat);
+
+        }
+        $response = $this->renderRegisterForm($registerModel->getMessage());
+          return $response;
+
+
+    }
+
+    public function renderRegisterForm($message) {
+      return '
             <h2>Register new user</h2>
             <form method="post">
                 <fieldset>
                     <legend>Register a new user - Write username and password</legend>
-                    <p id="' . self::$messageId . '">' . $this->message . '</p>
+                    <p id="' . self::$messageId . '">' . $message . '</p>
                     <label for="' . self::$name . '">Username :</label>
                     <input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
                     <br>
