@@ -20,8 +20,8 @@ ini_set('display_errors', 'On');
 // Initiate models
 $loginModel = new LoginModel();
 $registerModel = new RegisterModel();
-$user = new User();
-$userDAL = new UserDAL();
+//$user = new User($name, $password);
+//$userDAL = new UserDAL();
 
 // Initiate views
 $dt = new DateTimeView();

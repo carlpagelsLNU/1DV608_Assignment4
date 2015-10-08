@@ -17,9 +17,10 @@ class RegisterView {
         if(isset($_POST['RegisterView::Register'])) {
           
           $user = $_POST['RegisterView::UserName'];
-          $this->keepUser = $user;
+          $this->keepUser = $user; // Remove all html tags from user
+
           $password = $_POST['RegisterView::Password'];
-          $passwordRepeat = $_POST['RegisterView::Register'];
+          $passwordRepeat = $_POST['RegisterView::PasswordRepeat'];
           $registerController->validateMessage($user, $password, $passwordRepeat);
 
         }
@@ -37,7 +38,7 @@ class RegisterView {
                     <legend>Register a new user - Write username and password</legend>
                     <p id="' . self::$messageId . '">' . $message . '</p>
                     <label for="' . self::$name . '">Username :</label>
-                    <input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $user . '" />
+                    <input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . strip_tags($user) . '" />
                     <br>
                     <label for="' . self::$password . '">Password :</label>
                     <input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -53,6 +54,9 @@ class RegisterView {
 
   private function getUser() {
     return $this->keepUser;
+  }
+  public function setUser($user) {
+    $this->keepUser = $user;
   }
 
   public function renderBackToLogin() {
