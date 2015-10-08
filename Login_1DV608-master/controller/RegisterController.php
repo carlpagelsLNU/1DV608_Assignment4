@@ -29,7 +29,10 @@ class RegisterController {
 			$message .= "Username has too few characters, at least 3 characters.";
 		}
 		if(strlen($password) < 6) {
-			$message .= "Password has too few characters, at least 3 characters.";
+			$message .= " Password has too few characters, at least 6 characters.";
+		}
+		if($password != $passwordRepeat) {
+			$message .= " Passwords do not match.";
 		}
 		$this->registerModel->setMessage($message);
 

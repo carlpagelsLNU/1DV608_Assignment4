@@ -6,6 +6,7 @@ class RegisterView {
 	private static $password = 'RegisterView::Password';
 	private static $passwordRepeat = 'RegisterView::PasswordRepeat';
 	private static $register = 'RegisterView::Register';
+  private $keepUser = '';
 	private $registerLink = 'register';
 	private $backToLogin = 'backToLogin';
 	private $message = '';
@@ -16,18 +17,19 @@ class RegisterView {
         if(isset($_POST['RegisterView::Register'])) {
           
           $user = $_POST['RegisterView::UserName'];
+          $this->keepUser = $user;
           $password = $_POST['RegisterView::Password'];
           $passwordRepeat = $_POST['RegisterView::Register'];
           $registerController->validateMessage($user, $password, $passwordRepeat);
 
         }
-        $response = $this->renderRegisterForm($registerModel->getMessage());
+        $response = $this->renderRegisterForm($registerModel->getMessage(), $this->getUser());
           return $response;
 
 
     }
 
-    public function renderRegisterForm($message) {
+    public function renderRegisterForm($message, $user) {
       return '
             <h2>Register new user</h2>
             <form method="post">
@@ -35,7 +37,7 @@ class RegisterView {
                     <legend>Register a new user - Write username and password</legend>
                     <p id="' . self::$messageId . '">' . $message . '</p>
                     <label for="' . self::$name . '">Username :</label>
-                    <input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+                    <input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $user . '" />
                     <br>
                     <label for="' . self::$password . '">Password :</label>
                     <input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -48,6 +50,10 @@ class RegisterView {
             </form>
         ';
     }
+
+  private function getUser() {
+    return $this->keepUser;
+  }
 
   public function renderBackToLogin() {
     return "<a href='?" . $this->backToLogin . "'>Back to Login</a>";
