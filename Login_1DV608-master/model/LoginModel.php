@@ -6,11 +6,6 @@ class LoginModel {
 	public function __construct () {
 	}
 	
-	public function logout() {
-		$_SESSION['signedIn'] = false;
-		$this->setMessage('Bye bye!');
-		session_destroy();
-	}
 	public function signedIn() {
 		if(isset($_SESSION['signedIn']))
 			if($_SESSION['signedIn'])
