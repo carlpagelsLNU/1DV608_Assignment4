@@ -8,22 +8,23 @@ class LoginModel {
 	
 	public function signedIn() {
 		if(isset($_SESSION['signedIn']))
-			if($_SESSION['signedIn'])
 				return true;
 			return false;
 	}
 	public function logout() {
 		$this->setMessage('Bye bye!');
-		$_SESSION['signedIn'] = false;
-		session_destroy();
+		//$_SESSION['signedIn'] = false;
+		unset($_SESSION['signedIn']);
 	}
 	public function setMessage($message) {
-		$this->message = $message;
+		
+		//$this->message = $message;
 	}
 	public function getMessage() {
-		return $this->message;
+			
+	//	return $this->message;
 	}
-	private function setUser($user) {
+	public function setUser($user) {
 		$this->user = $user;
 	}
 	public function getUser() {

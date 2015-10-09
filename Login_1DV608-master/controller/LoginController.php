@@ -29,20 +29,20 @@ class LoginController {
 	*/
 	public function validateMessage($user, $password) {
 		if(strlen($user) < 1) { // If username is empty
-			$this->loginModel->setMessage('Username is missing');
+			$this->loginView->setSessionMessage('Username is missing');
 		}
 		else if (strlen($password) < 1) { // If password is empty
-			$this->loginModel->setMessage('Password is missing');
+			$this->loginView->setSessionMessage('Password is missing');
 		}
 		else if($user == 'Admin' && $password == 'Password') { // If username and password are correct
-				$this->loginModel->setMessage("Welcome");
+				$this->loginView->setSessionMessage("Welcome");
 				$this->loginView->setSessionTrue();
 			}
 		else if($user != 'Admin' || $password != 'Password') { // If either username or password is incorrect
-			$this->loginModel->setMessage('Wrong name or password');
+			$this->loginView->setSessionMessage('Wrong name or password');
 		}
 		else {
-			$this->loginModel->setMessage('');
+			$this->loginView->setSessionMessage('');
 			$this->loginView->setPassword($password);
 			$this->loginView->setUser($user);
 		}

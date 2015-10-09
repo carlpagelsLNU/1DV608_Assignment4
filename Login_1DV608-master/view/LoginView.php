@@ -8,6 +8,18 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
+	private static $sessionMessage;
+	private static $sessionUser;
+	private static $registerBoolean;
+
+	public function __construct() {
+		self::$sessionMessage = "Message::RegisterMessage";
+		self::$sessionUser = "User::RegisterMessage";
+		self::$registerBoolean = "registerBoolean::RegisterMessage";
+	}
+
+
+
 	/**
 	 * Create HTTP response
 	 *
@@ -23,6 +35,7 @@ class LoginView {
 		if(isset($_POST['LoginView::Login'])) { // Check if login button has been pressed
 				$user = $_POST['LoginView::UserName']; // Set name to whatever has been filled in the name box
 				$password = $_POST['LoginView::Password']; // Set password to whatever has been filled in the password box
+				$this->setSessionUser($user);
 				$loginController->validateMessage($user, $password);	
 		}
 		else {
@@ -32,14 +45,27 @@ class LoginView {
 			$response = $this->generateLogoutButtonHTML($loginModel->getMessage());
 		}
 		else {
-			$response = $this->generateLoginFormHTML($loginModel->getMessage(), $user);
+			if(isset($_SESSION[self::$registerBoolean])) {
+				if($_SESSION[self::$registerBoolean]) {
+					$user = $this->getSessionUser();
+					$response = $this->generateLoginFormHTML("Registered new user. ", $user);
+					$_SESSION[self::$registerBoolean] = false;
+				}
+				else
+					$response = $this->generateLoginFormHTML($this->getSessionMessage(), $this->getSessionUser());
+			}
+			else
+			$response = $this->generateLoginFormHTML($this->getSessionMessage(), $this->getSessionUser());
 		}
 		if($loginController->isSignedIn()) {
 			if(isset($_POST['LoginView::Logout'])) {
+				$this->setSessionUser("");
+				$this->setSessionMessage("");
 				$loginController->logout();
-				$response = $this->generateLoginFormHTML($loginModel->getMessage(), $user);
+				$response = $this->generateLoginFormHTML($loginModel->getMessage(), $loginController->getUser());
 			}
 		}
+		
 	return $response;
 	}
 	/**
@@ -83,8 +109,39 @@ class LoginView {
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
 	}
+	public function getSessionMessage() {
+		if(isset($_SESSION[self::$sessionMessage])){
+			$message = $_SESSION[self::$sessionMessage];
+			return $message;
+		}
+			return "";
+	}
+	public function getSessionUser() {
+		if(isset($_SESSION[self::$sessionUser])){
+			$user = $_SESSION[self::$sessionUser];
+			return $user;
+		}
+			return "";
+	}
+	public function setSessionMessage($message) {
+		$_SESSION[self::$sessionMessage] = $message;
+	}
+	public function setSessionUser($user) {
+		$_SESSION[self::$sessionUser] = $user;
+	}
+
+	public function setUser($user){
+		$this->user = $user;
+	}
+	public function setMessage($message) {
+		$this->message = $message;
+	}
+
 	public function setSessionTrue() {
 		$_SESSION['signedIn'] = true;
+	}
+	public function setRegisterTrue() {
+		$_SESSION[self::$registerBoolean] = true;
 	}
 	
 }

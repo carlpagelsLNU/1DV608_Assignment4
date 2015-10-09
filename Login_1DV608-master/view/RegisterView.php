@@ -25,9 +25,9 @@ class RegisterView {
 
         }
         $response = $this->renderRegisterForm($registerModel->getMessage(), $this->getUser());
-          return $response;
-
-
+        
+        
+        return $response;
     }
 
     public function renderRegisterForm($message, $user) {
