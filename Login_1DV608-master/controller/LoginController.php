@@ -57,10 +57,14 @@ class LoginController {
 	public function getUser() {
 		return $this->loginModel->getUser();
 	}
+	public function getMessage() {
+		return $this->loginModel->getMessage();
+	}
 	/*
 	* Logout using method in LoginModel
 	*/
 	public function logout() {
+		$this->loginView->setSessionMessage("Bye bye!");
 		$this->loginModel->logout();
 	}
 

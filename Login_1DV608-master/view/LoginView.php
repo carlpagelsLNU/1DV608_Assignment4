@@ -43,7 +43,8 @@ class LoginView {
 			$user = $loginController->getUser();
 		}
 		if($loginController->isSignedIn()) {
-			$response = $this->generateLogoutButtonHTML($loginModel->getMessage());
+			$response = $this->generateLogoutButtonHTML($this->getSessionMessage());
+			$this->setSessionMessage("");
 		}
 		else {
 			if(isset($_SESSION[self::$registerBoolean])) {
@@ -52,18 +53,21 @@ class LoginView {
 					$response = $this->generateLoginFormHTML("Registered new user. ", $user);
 					$_SESSION[self::$registerBoolean] = false;
 				}
-				else
+				else{
 					$response = $this->generateLoginFormHTML($this->getSessionMessage(), $this->getSessionUser());
+				}
 			}
-			else
-			$response = $this->generateLoginFormHTML($this->getSessionMessage(), $this->getSessionUser());
+			else{
+				$response = $this->generateLoginFormHTML($this->getSessionMessage(), $this->getSessionUser());
+				$this->setSessionMessage("");
+			}
+			
 		}
 		if($loginController->isSignedIn()) {
 			if(isset($_POST['LoginView::Logout'])) {
-				$this->setSessionUser("");
-				$this->setSessionMessage("");
 				$loginController->logout();
-				$response = $this->generateLoginFormHTML($loginModel->getMessage(), $loginController->getUser());
+				$response = $this->generateLoginFormHTML($this->getSessionMessage(), $loginController->getUser());
+
 			}
 		}
 		

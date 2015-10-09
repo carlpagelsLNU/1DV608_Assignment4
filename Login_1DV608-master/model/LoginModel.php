@@ -17,12 +17,10 @@ class LoginModel {
 		unset($_SESSION['signedIn']);
 	}
 	public function setMessage($message) {
-		
-		//$this->message = $message;
+		$this->message = $message;
 	}
-	public function getMessage() {
-			
-	//	return $this->message;
+	public function getMessage() {	
+		return $this->message;
 	}
 	public function setUser($user) {
 		$this->user = $user;
