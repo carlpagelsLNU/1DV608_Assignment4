@@ -20,4 +20,11 @@ Class UserDAL {
 			return true;
 		return false;
 	}
+
+	public function getPassword($user) {
+		if(file_exists('./data/' . addslashes($user))) {
+			return unserialize(file_get_contents('./data/' . addslashes($user)));
+		}
+		return "";
+	}
 }

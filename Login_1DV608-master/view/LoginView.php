@@ -30,7 +30,8 @@ class LoginView {
 	public function response() {
 		$loginModel = new LoginModel();
 		$loginView = new LoginView();
-		$loginController = new LoginController($loginModel, $loginView);
+		$userDal = new UserDAL();
+		$loginController = new LoginController($loginModel, $loginView, $userDal);
 
 		if(isset($_POST['LoginView::Login'])) { // Check if login button has been pressed
 				$user = $_POST['LoginView::UserName']; // Set name to whatever has been filled in the name box

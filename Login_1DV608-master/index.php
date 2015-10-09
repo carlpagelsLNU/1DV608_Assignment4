@@ -21,7 +21,7 @@ ini_set('display_errors', 'On');
 $loginModel = new LoginModel();
 $registerModel = new RegisterModel();
 //$user = new User($name, $password);
-//$userDAL = new UserDAL();
+$userDAL = new UserDAL();
 
 // Initiate views
 $dt = new DateTimeView();
@@ -30,7 +30,7 @@ $l = new LoginView();
 $rv = new RegisterView();
 
 // Initiate Controllers
-$loginCtrl = new LoginController($loginModel, $l);
+$loginCtrl = new LoginController($loginModel, $l, $userDAL);
 $registerCtrl = new RegisterController($registerModel, $rv);
 
 $lv->render($loginModel->signedIn(), $l, $dt, $rv);

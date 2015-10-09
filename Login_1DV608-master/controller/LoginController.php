@@ -8,14 +8,17 @@ class LoginController {
 	*/
 	private $loginModel;
 	private $loginView;
+	private $userDal;
 	/**
 	*	@param \model\LoginModel $loginModel
 	* 	@param \view\LoginView $loginView
+	*	@param \mode\UserDAL $userDal
 	*/
 
-	public function __construct(LoginModel $loginModel, LoginView $loginView) {
+	public function __construct(LoginModel $loginModel, LoginView $loginView, UserDAL $userDal) {
 		$this->loginModel = $loginModel;
 		$this->loginView = $loginView;
+		$this->userDal = $userDal;
 	}
 	
 	/**
@@ -34,11 +37,11 @@ class LoginController {
 		else if (strlen($password) < 1) { // If password is empty
 			$this->loginView->setSessionMessage('Password is missing');
 		}
-		else if($user == 'Admin' && $password == 'Password') { // If username and password are correct
+		else if($this->userDal->getPassword($user) == $password) { // If username and password are correct
 				$this->loginView->setSessionMessage("Welcome");
 				$this->loginView->setSessionTrue();
 			}
-		else if($user != 'Admin' || $password != 'Password') { // If either username or password is incorrect
+		else if($this->userDal->getPassword($user) != $password) { // If either username or password is incorrect
 			$this->loginView->setSessionMessage('Wrong name or password');
 		}
 		else {
